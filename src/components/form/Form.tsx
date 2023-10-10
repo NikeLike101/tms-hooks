@@ -20,7 +20,7 @@ const Form:React.FC<Props> = props => {
     }
 
     const handleClick = () => {
-        const newTask:Task = {text: inputValue, id: Math.round(Math.random() *20)}
+        const newTask:Task = {title: inputValue, id: Math.round(Math.random() *100), completed: false}
         onCreateTask(newTask)
     }
 

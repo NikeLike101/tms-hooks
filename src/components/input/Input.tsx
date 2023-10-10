@@ -1,5 +1,5 @@
 import React, {BaseSyntheticEvent, useCallback, useContext, useEffect, useMemo, useState} from "react";
-import {TasksContext} from "../../store/context";
+import {TasksContext} from "../../store/taskContext";
 
 interface Props {
     onChange: (newValue:string) => void
