@@ -1,16 +1,21 @@
-import React, {BaseSyntheticEvent, useContext, useEffect} from "react";
+import React, {BaseSyntheticEvent, useContext, useEffect, useState} from "react";
 import {Task} from "../../../models/Task";
 import {TasksContext} from "../../../store/taskContext";
 import Indicator from "./Indicator";
+import ListItemHocComponent from "../../../hocs/ListItemHocComponent";
+import {useNavigate} from "react-router-dom";
 
 
-interface Props {
+export interface ListItemProps {
     task: Task
+    onTitleClick: (taskId: number, taskTitle: string) => void
 }
-const ListItem:React.FC<Props> = props => {
-    const {task} = props
+const ListItem:React.FC<ListItemProps> = props => {
+    const {task,onTitleClick} = props
+    const navigation = useNavigate()
     const {activeTaskId, setActiveTaskId, tasks, setTasks} = useContext(TasksContext)
 
+    const [isMounted, setIsMounted] = useState<boolean>(false)
 
     const handleClickTask = () => {
         setActiveTaskId(task.id)
@@ -21,8 +26,48 @@ const ListItem:React.FC<Props> = props => {
                 ({...taskItem, completed: e.target.checked}) :
                 taskItem))
     }
+    const handleDeleteItem = () => {
+        setTasks(tasks.filter(taskItem => taskItem.id !== task.id))
+    }
 
+    const handleTitleClick = () => {
+        onTitleClick(task.id, task.title)
+    }
+    const handleGoToTaskPage =() => {
+        navigation(`${task.id}`)
+    }
 
+    // useEffect(() => {
+    //     setIsMounted(true)
+    //     console.log('mounting', task.id)
+    //
+    // }, []);
+    //
+    // useEffect(() => {
+    //     if (!isMounted) return
+    //     console.log('updating', task, tasks, activeTaskId, isMounted)
+    // } );
+    //
+    // useEffect(() => {
+    //     return () => {
+    //         console.log('unmounting', task.id)
+    //         setIsMounted(false)
+    //     }
+    // }, []);
+
+    // useEffect(() => {
+    //     if (isMounted) {
+    //
+    //         console.log('mounting', task.id)
+    //     } else {
+    //
+    //         console.log('updating', task.id)
+    //     }
+    //
+    //     return () => {
+    //         console.log('unmounting', task.id)
+    //     }
+    // });
 
 
 
@@ -30,11 +75,14 @@ const ListItem:React.FC<Props> = props => {
         border: `1px solid ${activeTaskId === task.id ? '#0f0' :'#00f'}`,
         display: "flex"}}>
 
-        {task.id}. ${task.title}
+        <div onClick={handleTitleClick}>{task.id}. ${task.title}</div>
 
         <Indicator isActive={activeTaskId === task.id}/>
         <input type={"checkbox"} checked={task.completed} onChange={handleChangeCompleteStatus} />
+        <div onClick={handleDeleteItem}>del</div>
+        <div onClick={handleGoToTaskPage} style={{width: 20, height: 20, background: '#00f'}}></div>
     </div>
 }
 
 export default ListItem
+export const ListItemWithHoc = ListItemHocComponent(ListItem)

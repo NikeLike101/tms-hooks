@@ -1,12 +1,14 @@
 import React from 'react';
 import MainContext from "./store";
-import Todo from "./pages/todo";
+import TodoPage from "./router/pages/todoPage";
+import Router from "./router/Router";
 
 function App() {
 
     return (
+
         <MainContext>
-                <Todo/>
+            <Router/>
         </MainContext>
   );
 }

@@ -52,7 +52,9 @@ export const TaskContextProvider: React.FC<PropsWithChildren> = (props) => {
         localStorage.setItem('tasks', JSON.stringify(tasks))
         setTasks(tasks)
     }
-
+    useEffect(() => {
+        console.log(tasks, 'in context')
+    }, [tasks]);
     return <TasksContext.Provider value={{
         tasks,
         setTasks: handleChangeTasks,
