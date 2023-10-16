@@ -2,6 +2,7 @@ import {RouteProps, useLocation, useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {TasksContext} from "../../store/taskContext";
 import {Task} from "../../models/Task";
+import PageContentWrapper from "../../components/page";
 
 
 
@@ -23,7 +24,7 @@ const TaskPage = () => {
     const handleGoBack = () => {
         navigation('todo')
     }
-    return <>task page
+    return <PageContentWrapper>task page
         <div onClick={handleGoBack}>go back</div>
         {task && <>
         <h1>{task.title}</h1>
@@ -31,7 +32,7 @@ const TaskPage = () => {
 
         </>}
 
-    </>
+    </PageContentWrapper>
 }
 
 export default TaskPage

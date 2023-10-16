@@ -1,9 +1,12 @@
-import React, {BaseSyntheticEvent, useContext, useEffect, useState} from "react";
+import React, {BaseSyntheticEvent, useContext, useState} from "react";
 import {Task} from "../../../models/Task";
 import {TasksContext} from "../../../store/taskContext";
 import Indicator from "./Indicator";
 import ListItemHocComponent from "../../../hocs/ListItemHocComponent";
 import {useNavigate} from "react-router-dom";
+import {Card, CardActions, CardContent, Tooltip} from "@mui/material";
+import {InputStyles} from "../../input/inputStyles";
+// import {ReactComponent as BurgerIcon} from '../../assets/burger.svg'
 
 
 export interface ListItemProps {
@@ -71,17 +74,22 @@ const ListItem:React.FC<ListItemProps> = props => {
 
 
 
-    return <div onClick={handleClickTask} style={{
-        border: `1px solid ${activeTaskId === task.id ? '#0f0' :'#00f'}`,
-        display: "flex"}}>
+    return <Tooltip title={`status is ${activeTaskId === task.id ? 'active': 'not active'}`} placement="top">
+        <Card onClick={handleClickTask} sx={InputStyles(activeTaskId === task.id)}>
+        <CardContent onClick={handleTitleClick}>
+            {task.id}. ${task.title}
+            {/*<BurgerIcon/>*/}
+        </CardContent>
+        <CardActions>
+                <Indicator isActive={activeTaskId === task.id}/>
 
-        <div onClick={handleTitleClick}>{task.id}. ${task.title}</div>
+            <input type={"checkbox"} checked={task.completed} onChange={handleChangeCompleteStatus} />
+            <div onClick={handleDeleteItem}>del</div>
+            <div onClick={handleGoToTaskPage} style={{width: 20, height: 20, background: '#00f'}}></div>
+        </CardActions>
 
-        <Indicator isActive={activeTaskId === task.id}/>
-        <input type={"checkbox"} checked={task.completed} onChange={handleChangeCompleteStatus} />
-        <div onClick={handleDeleteItem}>del</div>
-        <div onClick={handleGoToTaskPage} style={{width: 20, height: 20, background: '#00f'}}></div>
-    </div>
+    </Card>
+    </Tooltip>
 }
 
 export default ListItem

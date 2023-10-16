@@ -1,6 +1,7 @@
 import {BaseSyntheticEvent, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
+import PageContentWrapper from "../../components/page";
 
 
 const LoginPage = () => {
@@ -26,12 +27,12 @@ const LoginPage = () => {
         setLoginError(responseFromLogin.error)
     }
 
-    return <>
+    return <PageContentWrapper>
     <input value={loginValue} onChange={handleLoginValueChange}/>
     <input value={passwordValue} onChange={handlePasswordValueChange}/>
         {loginError && <div style={{color: '#f00'}}>{loginError}</div>}
         <button onClick={handleLogin}>login</button>
-    </>
+    </PageContentWrapper>
 }
 
 export default LoginPage

@@ -31,8 +31,10 @@ const Form:React.FC<Props> = props => {
     }, [inputValue]);
 
     return <div>
+
         <Input  onChange={handleChangeInput}/>
-        <Button onClick={handleClick} disable={isButtonDisabled}/>
+
+        <Button onClick={handleClick} disabled={isButtonDisabled} >Save</Button>
     </div>
 }
 

@@ -1,17 +1,17 @@
+import {Button as MuiButton, ButtonTypeMap, ExtendButtonBase} from '@mui/material'
+import {ButtonProps} from "@mui/material/Button/Button";
+import useThemeColors from "../../hooks/useThemeColors";
+import React from "react";
 
+interface Props extends ButtonProps {
 
-interface Props {
-    onClick: () => void
-    disable: boolean
 }
 
 const Button:React.FC<Props> = props => {
-    const {disable,onClick} = props
+    const {buttonBg} = useThemeColors()
 
-    const handleClick = () => {
-        onClick()
-    }
 
-    return <button onClick={handleClick} disabled={disable}>Save</button>
+
+    return <MuiButton sx={{background: buttonBg}} {...props}/>
 }
 export default Button

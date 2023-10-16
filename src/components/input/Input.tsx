@@ -1,20 +1,27 @@
-import React, {BaseSyntheticEvent, useCallback, useContext, useEffect, useMemo, useState} from "react";
+import React, {BaseSyntheticEvent, useContext, useEffect, useRef, useState} from "react";
 import {TasksContext} from "../../store/taskContext";
+import {IconButton, TextField} from "@mui/material";
+import {Add} from "@mui/icons-material";
+import useThemeColors from "../../hooks/useThemeColors";
 
 interface Props {
-    onChange: (newValue:string) => void
+    onChange: (newValue: string) => void
 }
 
-const Input:React.FC<Props> = props => {
-    const {onChange } = props
+const Input: React.FC<Props> = props => {
+    const {onChange} = props
     const {setActiveTaskId} = useContext(TasksContext)
-
+    const {inputBg,inputBgHovered, buttonBg, backgroundColor} = useThemeColors()
     const [value, setValue] = useState<string>('');
     const [value2, setValue2] = useState<string>('');
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
-    const handleChange =  (event: BaseSyntheticEvent) => {
-        setValue(event.target.value)
-        onChange(event.target.value )
+    const handleChange = (event: BaseSyntheticEvent) => {
+        // setValue(event.target.value)
+        if (inputRef.current === null) return
+        console.log(event)
+        console.log(inputRef.current.value)
+        onChange(inputRef.current.value)
     }
 
     const handleFocus = () => {
@@ -23,16 +30,39 @@ const Input:React.FC<Props> = props => {
 
     useEffect(() => {
         console.log(value, 'changed value')
-        
+
         setTimeout(() => {
             setValue2(value)
-        },1000)
+        }, 1000)
     }, [value]);
 
 
     useEffect(() => {
         // console.log(value2, 'changed value 2')
-    }, [value2]);
-    return <><input value={value} onFocus={handleFocus} onChange={handleChange} /></>
+
+    }, [inputRef.current]);
+    // return <><input value={value} onFocus={handleFocus} onChange={handleChange} /></>
+    return <TextField
+        variant={"filled"}
+        sx={{background: inputBg,
+            '&:hover': {
+                background: inputBgHovered,
+            },
+            '&.Mui-focused': {
+                color: buttonBg
+            },
+            '&.Mui-disabled': {
+                background: backgroundColor
+            }
+        }}
+        onFocus={handleFocus}
+        onChange={handleChange}
+        InputProps={{
+            inputRef: inputRef,
+            startAdornment: <IconButton>
+                <Add/>
+            </IconButton>
+        }}
+    />
 }
 export default Input
