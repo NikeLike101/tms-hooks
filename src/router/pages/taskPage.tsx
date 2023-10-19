@@ -1,17 +1,17 @@
-import {RouteProps, useLocation, useNavigate} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
-import {TasksContext} from "../../store/taskContext";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 import {Task} from "../../models/Task";
 import PageContentWrapper from "../../components/page";
-
-
+import {useAppSelector} from "../../store/store";
+import {useSelector} from "react-redux";
+import store from "../../store";
 
 
 const TaskPage = () => {
 
     const location = useLocation()
     const navigation = useNavigate()
-    const {tasks} = useContext(TasksContext)
+    const {tasks} = useAppSelector(state => state)
     const [task, setTask] = useState<Task | undefined>(undefined);
     useEffect(() => {
             // setTask()

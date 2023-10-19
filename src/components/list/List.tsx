@@ -1,14 +1,13 @@
-import React, {useContext, useEffect} from "react";
-import {Task} from "../../models/Task";
-import ListItem, {ListItemWithHoc} from "./item/ListItem";
-import {TasksContext} from "../../store/taskContext";
+import React from "react";
+import ListItem from "./item/ListItem";
+import {useAppSelector} from "../../store/store";
 
 
 interface Props {
 }
 
 const List: React.FC<Props> = props => {
-    const {tasks} = useContext(TasksContext)
+    const {tasks} = useAppSelector(state => state)
 
 
     const handleClickTaskText = (taskId: number, text: string) => {

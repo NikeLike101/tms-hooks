@@ -1,11 +1,13 @@
-import React, {BaseSyntheticEvent, useContext, useState} from "react";
+import React, {BaseSyntheticEvent, useState} from "react";
 import {Task} from "../../../models/Task";
-import {TasksContext} from "../../../store/taskContext";
 import Indicator from "./Indicator";
 import ListItemHocComponent from "../../../hocs/ListItemHocComponent";
 import {useNavigate} from "react-router-dom";
 import {Card, CardActions, CardContent, Tooltip} from "@mui/material";
 import {InputStyles} from "../../input/inputStyles";
+import {useAppDispatch, useAppSelector} from "../../../store/store";
+import {setActiveTaskId, setTasks} from "../../../store/reducers/taskReducer";
+
 // import {ReactComponent as BurgerIcon} from '../../assets/burger.svg'
 
 
@@ -16,21 +18,21 @@ export interface ListItemProps {
 const ListItem:React.FC<ListItemProps> = props => {
     const {task,onTitleClick} = props
     const navigation = useNavigate()
-    const {activeTaskId, setActiveTaskId, tasks, setTasks} = useContext(TasksContext)
-
+    const {tasks, activeTaskId} = useAppSelector(state => state)
+    const dispatch = useAppDispatch()
     const [isMounted, setIsMounted] = useState<boolean>(false)
 
     const handleClickTask = () => {
-        setActiveTaskId(task.id)
+        dispatch(setActiveTaskId(task.id))
     }
     const handleChangeCompleteStatus = (e: BaseSyntheticEvent) => {
-        setTasks(tasks.map(taskItem =>
+        dispatch(setTasks(tasks.map(taskItem =>
             taskItem.id === task.id ?
                 ({...taskItem, completed: e.target.checked}) :
-                taskItem))
+                taskItem)))
     }
     const handleDeleteItem = () => {
-        setTasks(tasks.filter(taskItem => taskItem.id !== task.id))
+        dispatch(setTasks(tasks.filter(taskItem => taskItem.id !== task.id)))
     }
 
     const handleTitleClick = () => {

@@ -1,10 +1,8 @@
-
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {Task} from "../../models/Task";
 import Form from "../../components/form";
 import List from "../../components/list";
-import {TasksContext} from "../../store/taskContext";
-import {ThemeContext, ThemeEnum} from "../../store/themeContext";
+import {ThemeContext} from "../../store/themeContext";
 import ThemeButton from "../../components/themeButton";
 import {PhotoType} from "../../models/photo";
 import PhotoPicker from "../../components/photoPicker/PhotoPicker";
@@ -13,11 +11,15 @@ import useAuth from "../../hooks/useAuth";
 import {Box, Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import useThemeColors from "../../hooks/useThemeColors";
 import PageContentWrapper from "../../components/page";
+import Films from "../../components/films";
+import {useAppDispatch, useAppSelector} from "../../store/store";
+import {setTasks} from "../../store/reducers/taskReducer";
 
 
 const TodoPage:React.FC = () => {
 
-    const {tasks, setTasks} = useContext(TasksContext)
+    const {tasks} = useAppSelector(state => state)
+    const dispatch = useAppDispatch()
     const {theme} = useContext(ThemeContext)
     const colors = useThemeColors()
     const {logout} = useAuth()
@@ -27,7 +29,8 @@ const TodoPage:React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const intervalRef = useRef<number>(null)
     const handleCreateNewTask = (newTask:Task) => {
-        setTasks([...tasks, newTask])
+
+        dispatch(setTasks([...tasks, newTask]))
     }
     const handleClickPhoto = async (photoId: number) => {
         const data =await getPhoto(photoId)
@@ -94,11 +97,13 @@ const TodoPage:React.FC = () => {
         </Box>
         {/*<button onClick={handleStopInterval}>stop interval</button>*/}
         <List/>
+        <Films/>
 
-        <Dialog open={isDialogOpen}>
+        <Dialog open={isDialogOpen} PaperProps={{ sx: {height: '200px'}}} >
             <DialogTitle>Title</DialogTitle>
             <DialogContent>
                 asdsaasd sad adasd asd asda sd asdas dsad sasd asda sdas dsa das
+                <Films/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Back</Button>

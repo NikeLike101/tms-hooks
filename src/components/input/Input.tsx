@@ -1,8 +1,9 @@
-import React, {BaseSyntheticEvent, useContext, useEffect, useRef, useState} from "react";
-import {TasksContext} from "../../store/taskContext";
+import React, {BaseSyntheticEvent, useEffect, useRef, useState} from "react";
 import {IconButton, TextField} from "@mui/material";
 import {Add} from "@mui/icons-material";
 import useThemeColors from "../../hooks/useThemeColors";
+import {useAppDispatch} from "../../store/store";
+import {setActiveTaskId} from "../../store/reducers/taskReducer";
 
 interface Props {
     onChange: (newValue: string) => void
@@ -10,7 +11,7 @@ interface Props {
 
 const Input: React.FC<Props> = props => {
     const {onChange} = props
-    const {setActiveTaskId} = useContext(TasksContext)
+    const dispatch = useAppDispatch()
     const {inputBg,inputBgHovered, buttonBg, backgroundColor} = useThemeColors()
     const [value, setValue] = useState<string>('');
     const [value2, setValue2] = useState<string>('');
@@ -25,7 +26,7 @@ const Input: React.FC<Props> = props => {
     }
 
     const handleFocus = () => {
-        setActiveTaskId(undefined)
+        dispatch(setActiveTaskId(undefined))
     }
 
     useEffect(() => {
