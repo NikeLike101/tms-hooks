@@ -1,12 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import PageContentWrapper from "../../components/page";
+import {useAppSelector} from "../../store/store";
 
 const NotFound404 = () => {
     const navigation = useNavigate()
-    const {isAuthorized} = useAuth()
+    const user = useAppSelector(state => state.userReducer.user)
     const handleNavigateToLogin = () => {
-        navigation(isAuthorized ? '/todo' : '/login')
+        navigation(user !== null ? '/todo' : '/login')
     }
 
     return <PageContentWrapper>not found <button onClick={handleNavigateToLogin} >login</button></PageContentWrapper>

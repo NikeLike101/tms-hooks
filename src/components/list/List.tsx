@@ -7,7 +7,7 @@ interface Props {
 }
 
 const List: React.FC<Props> = props => {
-    const {tasks} = useAppSelector(state => state)
+    const {tasks} = useAppSelector(state => state.taskReducer)
 
 
     const handleClickTaskText = (taskId: number, text: string) => {

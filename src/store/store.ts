@@ -1,15 +1,18 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import taskReducer from "./reducers/taskReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import userReducer from "./reducers/userReducer";
 
+
+const appReducer = combineReducers({taskReducer, userReducer})
 
 
 export const store = configureStore({
-    reducer: taskReducer
+    reducer: appReducer
 })
 
 
-export type AppStateType = ReturnType<typeof store.getState>
+export type AppStateType = ReturnType<typeof appReducer>
 export type AppDispatchType = typeof store.dispatch
 
 export const useAppDispatch: ()=> AppDispatchType = useDispatch

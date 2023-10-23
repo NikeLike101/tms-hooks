@@ -12,17 +12,17 @@ import {Box, Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@m
 import useThemeColors from "../../hooks/useThemeColors";
 import PageContentWrapper from "../../components/page";
 import Films from "../../components/films";
-import {useAppDispatch, useAppSelector} from "../../store/store";
+import {AppStateType, useAppDispatch, useAppSelector} from "../../store/store";
 import {setTasks} from "../../store/reducers/taskReducer";
 
 
 const TodoPage:React.FC = () => {
 
-    const {tasks} = useAppSelector(state => state)
+    const {tasks} = useAppSelector((state) => state.taskReducer)
+    const {user} = useAppSelector((state) => state.userReducer)
     const dispatch = useAppDispatch()
     const {theme} = useContext(ThemeContext)
     const colors = useThemeColors()
-    const {logout} = useAuth()
 
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [currentPhoto, setCurrentPhoto] = useState<PhotoType | undefined>(undefined)
@@ -46,7 +46,7 @@ const TodoPage:React.FC = () => {
     }
 
     const handleLogout = () => {
-        logout()
+
     }
 
     const handlePlayVideo = () => {
@@ -81,6 +81,7 @@ const TodoPage:React.FC = () => {
 
     return <PageContentWrapper>
         <ThemeButton/>
+        {user !== null && <>Hi, there {user.login}, session from {new Date(user.sessionStartDate).toLocaleDateString()}</>}
         <button onClick={handleLogout}>logout</button>
         {Array.from({length: 5}).map((photoPickerItem, index) =>
             <PhotoPicker onClick={handleClickPhoto} value={index+1} key={index}/>)}

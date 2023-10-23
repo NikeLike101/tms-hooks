@@ -1,5 +1,6 @@
-import {useId} from "react";
 import {useNavigate} from "react-router-dom";
+import { routeLocationsEnum } from "../router/Router";
+import md5 from "md5";
 
 
 type AuthUserInfo = {
@@ -7,42 +8,66 @@ type AuthUserInfo = {
     password: string
 }
 
+type UserDataHash = {
+    loginHash: string
+    passwordHash: string
+}
+
+type AuthMethodsReturnType = {
+    isSuccess: boolean
+    error?: string
+}
+
+
 const useAuth = () => {
 
-
-    const navigation = useNavigate()
-    const authUsers:AuthUserInfo[] = JSON.parse(localStorage.getItem('authInfo') || '[]')
+    const authUsers:UserDataHash[] = JSON.parse(localStorage.getItem('authInfo') || '[]')
 
 
 
+    const register = (data: AuthUserInfo): AuthMethodsReturnType => {
 
-    const login = (data: AuthUserInfo) => {
-        const newAuthUsers = authUsers
-        const foundUserFromStorage = newAuthUsers.find(user => user.login === data.login)
+        const dataHash: UserDataHash = {
+            loginHash: md5(data.login),
+            passwordHash: md5(data.password)
+        }
+
+        if (authUsers.find(userHash => userHash.loginHash === dataHash.loginHash)) {
+            return {isSuccess: false, error: 'user with same login already exist'}
+        }
+        localStorage.setItem('authInfo', JSON.stringify([...authUsers, dataHash]))
+        return {isSuccess: true}
+
+    }
+//register
+    // user: nikita password: 123456 ->
+    // passwordHash: md5('123456') -> asokdsandianocnsaodnqo1eo2n3o1nckodasndcoasndjosand1
+
+
+
+//login
+    // user: nikita password: 123456
+    //md5(password) === passwordHash
+
+    // // user: nikita password: 654321
+    //
+
+
+
+    const login = (data: AuthUserInfo):AuthMethodsReturnType => {
+        const foundUserFromStorage = authUsers.find(user => user.loginHash === md5(data.login))
         if (foundUserFromStorage) {
             console.log(foundUserFromStorage, 'user')
-            if (data.password === foundUserFromStorage.password){
+            if (md5(data.password) === foundUserFromStorage.passwordHash){
                 localStorage.setItem('activeUser', `${data.login}`)
-                return {error: undefined}
+                return {isSuccess: true}
             } else {
-                return {error: 'password is not correct'}
+                return {isSuccess: false, error: 'password is not correct'}
             }
         }
-        console.log(data, 'data', authUsers)
-        localStorage.setItem('authInfo', JSON.stringify([...newAuthUsers, data]))
-        localStorage.setItem('activeUser', `${data.login}`)
-        return {error: undefined}
+        return {isSuccess: false, error: 'user not found'}
     }
-
-    const logout = () => {
-        localStorage.removeItem('activeUser')
-        navigation('/login')
-    }
-
-    const isAuthorized = !!localStorage.getItem('activeUser')
-
-    const getActiveUser = () => localStorage.getItem('activeUser')
-    return { isAuthorized, login, logout, getActiveUser}
+    return {  login, register}
 }
 
 export default useAuth

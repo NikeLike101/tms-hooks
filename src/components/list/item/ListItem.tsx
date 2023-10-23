@@ -18,7 +18,7 @@ export interface ListItemProps {
 const ListItem:React.FC<ListItemProps> = props => {
     const {task,onTitleClick} = props
     const navigation = useNavigate()
-    const {tasks, activeTaskId} = useAppSelector(state => state)
+    const {tasks, activeTaskId} = useAppSelector((state) => state.taskReducer)
     const dispatch = useAppDispatch()
     const [isMounted, setIsMounted] = useState<boolean>(false)
 

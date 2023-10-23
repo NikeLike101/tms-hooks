@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import TodoPage from "./pages/todoPage";
-import LoginPage from "./pages/loginPage";
+import SignInPage from "./pages/signInPage";
 import RouterRoutes from "./RouterRoutes";
 
-enum routeLocationsEnum {
+export enum routeLocationsEnum {
     todo= '/todo',
-    login= '/login'
-}
+    main='/',
+    signIn='/sign-in',
+    signUp= '/sign-up',
 
-const routeLocations = [routeLocationsEnum.login,routeLocationsEnum.todo]
+}
 
 const Router:React.FC = () => {
 
