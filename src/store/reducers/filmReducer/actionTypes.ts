@@ -1,0 +1,7 @@
+
+
+export enum FilmReducerEnum {
+    SET_FILMS='SET_FILMS',
+    SET_FAVORITE_FILMS='SET_FAVORITE_FILMS',
+    SET_SELECTED_FILM='SET_SELECTED_FILM',
+}

@@ -2,19 +2,15 @@ import {Film} from "../../../models/Film";
 import React, {useEffect} from "react";
 import {Autocomplete, TextField} from "@mui/material";
 import useThemeColors from "../../../hooks/useThemeColors";
+import {useAppSelector} from "../../../store/store";
 
 
 interface Props {
-    films: Film[]
 }
 
 const FilmsAutocomplete:React.FC<Props> = props => {
-    const {films} = props
+    const {films} = useAppSelector(state => state.filmReducer)
     const colors = useThemeColors()
-
-    useEffect(() => {
-        console.log(films)
-    }, [films]);
     return <><Autocomplete sx={{
         width: '400px',
         background: colors.inputBg,

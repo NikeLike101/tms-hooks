@@ -9,6 +9,8 @@ import MainPage from "./pages/mainPage";
 import NotFound404 from "./pages/notFound404";
 import SignUpPage from "./pages/signUpPage";
 import {useAppSelector} from "../store/store";
+import FavoriteFilms from "./pages/FavoriteFilms";
+import FilmPage from "./pages/FilmPage";
 
 const RouterRoutes = () => {
 
@@ -19,6 +21,10 @@ const RouterRoutes = () => {
         console.log(pathname, params)
     }, [pathname]);
 
+
+    useEffect(() => {
+        console.log(user, 'userFromRedux')
+    }, [user]);
 
     return  <Routes>
 <Route path=''>
@@ -32,6 +38,8 @@ const RouterRoutes = () => {
         <Route path={routeLocationsEnum.main} Component={MainPage} />
         <Route path={routeLocationsEnum.signIn} Component={SignInPage} />
         <Route path={routeLocationsEnum.signUp} Component={SignUpPage} />
+        <Route path={routeLocationsEnum.favoriteFilms} Component={FavoriteFilms} />
+        <Route path={routeLocationsEnum.filmPage} Component={FilmPage} />
         <Route path='*' Component={NotFound404}/>
 
 </Route>

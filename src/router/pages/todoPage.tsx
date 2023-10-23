@@ -81,7 +81,7 @@ const TodoPage:React.FC = () => {
 
     return <PageContentWrapper>
         <ThemeButton/>
-        {user !== null && <>Hi, there {user.login}, session from {new Date(user.sessionStartDate).toLocaleDateString()}</>}
+        {user !== null && <>Hi, there {user.login}, session from {new Date(user.sessionStartDate).toLocaleTimeString()}</>}
         <button onClick={handleLogout}>logout</button>
         {Array.from({length: 5}).map((photoPickerItem, index) =>
             <PhotoPicker onClick={handleClickPhoto} value={index+1} key={index}/>)}

@@ -10,7 +10,7 @@ export const getFilms = async () => {
             resolve(films as Film[])
 
             clearTimeout(timer)
-        }, 4000)
+        }, 1000)
     })
 
     return newFilms

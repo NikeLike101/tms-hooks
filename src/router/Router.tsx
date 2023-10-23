@@ -9,6 +9,8 @@ export enum routeLocationsEnum {
     main='/',
     signIn='/sign-in',
     signUp= '/sign-up',
+    favoriteFilms='/favoriteFilms',
+    filmPage='/films/:filmLabel'
 
 }
 
