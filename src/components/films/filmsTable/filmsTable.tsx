@@ -62,7 +62,9 @@ const FilmsTable:React.FC<Props> = props => {
 
 
     const handleGoToFilm = (filmLabel: string) => {
-        dispatch(setSelectedFilmByLabel(filmLabel))
+        const foundFilm = films.find(film => film.label === filmLabel)
+        if (foundFilm === undefined) return
+        dispatch(setSelectedFilmByLabel(foundFilm))
         navigation(`/films/${filmLabel}`)
     }
     const handleToggleLikeStatus = (filmLabel: string) => {

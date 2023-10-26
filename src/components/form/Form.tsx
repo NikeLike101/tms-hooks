@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Input from "../input";
 import Button from "../button";
 import {Task} from "../../models/Task";
@@ -15,7 +15,9 @@ const Form:React.FC<Props> = props => {
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
 
+
     const handleChangeInput = (newValue: string) => {
+
         setInputValue(newValue)
     }
 

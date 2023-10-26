@@ -1,8 +1,8 @@
 import {Task} from "../../../models/Task";
 
 
-export const getTodos = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+export const getTodos = async ():Promise<Task[]> => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos/')
     const data = await response.json()
-    return {title: data.title, id: data.id, completed: data.completed }
+    return data.map( (dataItem:Task) => ({title: dataItem.title, id: dataItem.id, completed: dataItem.completed }))
 }

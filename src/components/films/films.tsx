@@ -5,9 +5,10 @@ import {Film} from "../../models/Film";
 import {getFilms} from "../../api/services/filmsService/service";
 import FilmsTable from "./filmsTable/filmsTable";
 import {useAppDispatch, useAppSelector} from "../../store/store";
-import {setFavoriteFilmsToStore, setFilmsToStore} from "../../store/reducers/filmReducer/actions";
+import {getFilmsDataAction, setFavoriteFilmsToStore, setFilmsToStore} from "../../store/reducers/filmReducer/actions";
 import {useNavigate} from "react-router-dom";
 import {routeLocationsEnum} from "../../router/Router";
+import {useDispatch} from "react-redux";
 
 
 const Films: React.FC = props => {
@@ -18,19 +19,25 @@ const Films: React.FC = props => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const setLimitedLengthOfData = (length: number) => {
+        // const hello = 'hello'+newString
+        return (data: Film[]) => setFilmsToStore(data.length > length ? data.slice(length) : data)
+
+
+        // return (newValue: number) => {
+        //     return `${hello.length} + ${newValue} = ${hello.length + newValue} : ${hello}`
+        // }
+    }
+
+
     useEffect(() => {
         // getFilms().then(response => setFilms(response))
         console.log('zxcxzc')
-        setIsLoading(true)
-        const getData = async () => {
-            const data = await getFilms()
-            console.log(data, 'data')
+        console.log(
+            // getSmth('qwer')(12)
+        )
 
-            dispatch(setFilmsToStore(data))
-            dispatch(setFavoriteFilmsToStore(data.filter(film => film.isLiked)))
-            setIsLoading(false)
-        }
-        getData()
+        dispatch(getFilmsDataAction())
     }, []);
 
 

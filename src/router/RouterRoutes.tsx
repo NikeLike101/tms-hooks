@@ -28,12 +28,12 @@ const RouterRoutes = () => {
 
     return  <Routes>
 <Route path=''>
-        {user !== null &&
+        {/*{user !== null &&*/}
            <> <Route path='todo' Component={TodoPage} />
 
                <Route path='todo/:id' Component={TaskPage}/>
            </>
-        }
+        {/*}*/}
 
         <Route path={routeLocationsEnum.main} Component={MainPage} />
         <Route path={routeLocationsEnum.signIn} Component={SignInPage} />

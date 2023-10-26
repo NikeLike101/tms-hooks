@@ -15,3 +15,9 @@ export const getFilms = async () => {
 
     return newFilms
 }
+export const getAllComments = async ():Promise<Comment[]> => {
+    const rawData = await fetch('https://jsonplaceholder.typicode.com/comments')
+    const data = await rawData.json()
+
+    return data
+}
