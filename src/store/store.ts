@@ -5,9 +5,11 @@ import userReducer from "./reducers/userReducer";
 import filmReducer from "./reducers/filmReducer";
 import logger from 'redux-logger'
 import thunk from "redux-thunk";
+import drawerReducer from "./reducers/drawerReducer";
+import blogUsersReducer from "./reducers/blogUsersReducer";
 
 
-const appReducer = combineReducers({taskReducer, userReducer, filmReducer})
+const appReducer = combineReducers({taskReducer, userReducer, filmReducer, drawerReducer, blogUsersReducer})
 
 
 export const store = configureStore({

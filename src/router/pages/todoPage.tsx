@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 import {Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack} from "@mui/material";
 import useThemeColors from "../../hooks/useThemeColors";
 import PageContentWrapper from "../../components/page";
-import Films from "../../components/films";
+import Films from "../../modules/films";
 import {AppStateType, useAppDispatch, useAppSelector} from "../../store/store";
 import {setTasks} from "../../store/reducers/taskReducer";
 import {getInitialValue} from "../../store/reducers/userReducer/actions";

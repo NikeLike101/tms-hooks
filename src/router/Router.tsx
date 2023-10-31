@@ -10,8 +10,8 @@ export enum routeLocationsEnum {
     signIn='/sign-in',
     signUp= '/sign-up',
     favoriteFilms='/favoriteFilms',
-    filmPage='/films/:filmLabel'
-
+    filmPage='/films/:filmLabel',
+    usersPage='/users'
 }
 
 const Router:React.FC = () => {

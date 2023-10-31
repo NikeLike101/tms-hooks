@@ -11,6 +11,7 @@ import SignUpPage from "./pages/signUpPage";
 import {useAppSelector} from "../store/store";
 import FavoriteFilms from "./pages/FavoriteFilms";
 import FilmPage from "./pages/FilmPage";
+import UsersPage from "./pages/UsersPage";
 
 const RouterRoutes = () => {
 
@@ -27,19 +28,20 @@ const RouterRoutes = () => {
     }, [user]);
 
     return  <Routes>
-<Route path=''>
+<Route path='' >
         {/*{user !== null &&*/}
            <> <Route path='todo' Component={TodoPage} />
 
-               <Route path='todo/:id' Component={TaskPage}/>
+               <Route path='/:id' Component={TaskPage}/>
            </>
         {/*}*/}
 
-        <Route path={routeLocationsEnum.main} Component={MainPage} />
+        <Route path={routeLocationsEnum.main} Component={() => <MainPage />} />
         <Route path={routeLocationsEnum.signIn} Component={SignInPage} />
         <Route path={routeLocationsEnum.signUp} Component={SignUpPage} />
         <Route path={routeLocationsEnum.favoriteFilms} Component={FavoriteFilms} />
         <Route path={routeLocationsEnum.filmPage} Component={FilmPage} />
+        <Route path={routeLocationsEnum.usersPage} Component={UsersPage} />
         <Route path='*' Component={NotFound404}/>
 
 </Route>
