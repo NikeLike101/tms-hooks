@@ -3,7 +3,7 @@ import {IconButton, Table, TableBody, TableCell, TableHead, TableRow} from "@mui
 import {useAppSelector} from "../../../store/store";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
-import {setBlogPostsToStore} from "../../../store/reducers/blogUsersReducer";
+import {setBlogPostsToStore} from "../../../store/reducers/blogUsersReducer/actions";
 
 
 interface Props {
@@ -12,7 +12,6 @@ interface Props {
 
 const PostsTable:React.FC<Props> = props => {
     const {} = props
-
     const {posts, selectedUserId, users} = useAppSelector(state => state.blogUsersReducer)
 const dispatch = useDispatch()
 

@@ -15,6 +15,8 @@ import Films from "../../modules/films";
 import {AppStateType, useAppDispatch, useAppSelector} from "../../store/store";
 import {setTasks} from "../../store/reducers/taskReducer";
 import {getInitialValue} from "../../store/reducers/userReducer/actions";
+import {getProducts} from "../../api/services/storeServices/service";
+import Products from "../../modules/products";
 
 
 const TodoPage:React.FC = () => {
@@ -34,9 +36,9 @@ const TodoPage:React.FC = () => {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
+
     useEffect(() => {
         dispatch(getInitialValue())
-
     }, []);
 
     useEffect(() => {
@@ -126,6 +128,7 @@ const TodoPage:React.FC = () => {
             <PhotoPicker onClick={handleClickPhoto} value={index+1} key={index}/>)}
         {currentPhoto && <img src={currentPhoto.url}/>}
 
+        <Products/>
         {/*<TaskContextProvider>*/}
         <Form onCreateTask={handleCreateNewTask}/>
         {/*</TaskContextProvider>*/}

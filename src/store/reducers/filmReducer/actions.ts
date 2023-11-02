@@ -3,14 +3,15 @@ import {Film} from "../../../models/Film";
 import {getFilms} from "../../../api/services/filmsService/service";
 import {AnyAction, Dispatch} from "@reduxjs/toolkit";
 
-export const getFilmsDataAction = () =>
-    async (dispatch: Dispatch<AnyAction>) => {
+export const getFilmsDataAction = () => {
+    return async (dispatch: Dispatch<AnyAction>) => {
 
         if (dispatch === undefined) return
         const data = await getFilms()
         dispatch(setFilmsToStore(data))
         dispatch(setFavoriteFilmsToStore(data.filter(film => film.isLiked)))
     }
+}
 
 
 

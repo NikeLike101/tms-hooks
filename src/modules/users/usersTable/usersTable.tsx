@@ -18,7 +18,7 @@ import {
     setBlogPostsToStore,
     setBlogUsersToStore,
     setSelectedBlogUserToStore
-} from "../../../store/reducers/blogUsersReducer";
+} from "../../../store/reducers/blogUsersReducer/actions";
 import Button from "../../../components/button";
 import {BlogUser} from "../../../models/User";
 

@@ -6,18 +6,26 @@ import filmReducer from "./reducers/filmReducer";
 import logger from 'redux-logger'
 import thunk from "redux-thunk";
 import drawerReducer from "./reducers/drawerReducer";
-import blogUsersReducer from "./reducers/blogUsersReducer";
+import blogUsersReducer from "./reducers/blogUsersReducer/index";
+import productsReducer from "./reducers/productsReducer";
+import createSagaMiddleware from "redux-saga";
+import {productsWatcher} from "./saga/productsSaga";
+import {filmsWatcher} from "./saga/filmsSaga";
+import {appWatcher} from "./saga";
 
 
-const appReducer = combineReducers({taskReducer, userReducer, filmReducer, drawerReducer, blogUsersReducer})
+const appReducer = combineReducers({taskReducer, userReducer, filmReducer, drawerReducer, blogUsersReducer, productsReducer})
 
+
+const sagaMiddleware = createSagaMiddleware()
 
 export const store = configureStore({
 
     reducer: appReducer,
-    middleware: getDefaultMiddleware => [...getDefaultMiddleware(), logger]
+    middleware: getDefaultMiddleware => [...getDefaultMiddleware(), thunk, sagaMiddleware]
 })
 
+sagaMiddleware.run(appWatcher)
 
 export type AppStateType = ReturnType<typeof appReducer>
 export type AppDispatchType = ThunkDispatch<AppStateType, null, AnyAction>

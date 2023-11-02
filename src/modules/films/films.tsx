@@ -9,6 +9,7 @@ import {getFilmsDataAction, setFavoriteFilmsToStore, setFilmsToStore} from "../.
 import {useNavigate} from "react-router-dom";
 import {routeLocationsEnum} from "../../router/Router";
 import {useDispatch} from "react-redux";
+import {getFilmsSaga} from "../../store/saga/filmsSaga";
 
 
 const Films: React.FC = props => {
@@ -37,7 +38,8 @@ const Films: React.FC = props => {
             // getSmth('qwer')(12)
         )
 
-        dispatch(getFilmsDataAction())
+        // dispatch(getFilmsDataAction())
+dispatch(getFilmsSaga())
     }, []);
 
 

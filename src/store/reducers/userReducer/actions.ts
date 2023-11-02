@@ -8,13 +8,19 @@ import {setCommentsToStore, setFilmsToStore} from "../filmReducer/actions";
 import {setTasks} from "../taskReducer";
 
 
-export const getInitialValue = () => async (dispatch: AppDispatchType) => {
+export const getInitialValue = () => {
+    return async (dispatch: AppDispatchType) => {
 
-   const [dataFilms, dataComments, dataTodos] =  await Promise.all([getFilms(), getAllComments(), getTodos()])
-    dispatch(setFilmsToStore(dataFilms))
-    dispatch(setCommentsToStore(dataComments))
-    dispatch(setTasks(dataTodos))
+        const [
+            // dataFilms,
+            dataComments, dataTodos] = await Promise.all([
+            // getFilms(),
+            getAllComments(), getTodos()])
+        // dispatch(setFilmsToStore(dataFilms))
+        dispatch(setCommentsToStore(dataComments))
+        dispatch(setTasks(dataTodos))
 
+    }
 }
 
 
