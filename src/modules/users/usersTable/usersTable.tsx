@@ -1,15 +1,17 @@
-import React, {BaseSyntheticEvent, useState} from "react";
+import React, {BaseSyntheticEvent, useEffect, useState} from "react";
 import {
     Box,
     Dialog,
-    DialogActions, DialogContent,
+    DialogActions,
+    DialogContent,
     DialogTitle,
     IconButton,
     Table,
     TableBody,
     TableCell,
     TableHead,
-    TableRow, TextField
+    TableRow,
+    TextField
 } from "@mui/material";
 import {useAppSelector} from "../../../store/store";
 import {Delete, Edit, Square} from "@mui/icons-material";
@@ -31,11 +33,16 @@ const UsersTable:React.FC<Props> = props => {
     const {} = props
 
     const dispatch = useDispatch()
-    const {users, selectedUserId, posts} = useAppSelector(state => state.blogUsersReducer)
+    const {users, selectedUserId, posts, searchString} = useAppSelector(state => state.blogUsersReducer)
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [newUserName, setNewUserName] = useState<string>('');
     const [editingUserId, setEditingUserId] = useState<number | null>(null);
+    const [usersToShow, setUsersToShow] = useState<BlogUser[]>([]);
 
+    useEffect(() => {
+        setUsersToShow(users
+            .filter(user => user.name.toLowerCase().includes(searchString.toLowerCase())))
+    }, [users, searchString]);
     const handleHighlightPosts = (userId: number) => {
         dispatch(setSelectedBlogUserToStore(userId === selectedUserId ? null : userId))
     }
@@ -83,7 +90,7 @@ const UsersTable:React.FC<Props> = props => {
             </TableRow>
         </TableHead>
         <TableBody>
-            {[...users, ...users].map(user => <TableRow>
+            {usersToShow.map(user => <TableRow>
                 <TableCell>
                     {user.name}
                 </TableCell>

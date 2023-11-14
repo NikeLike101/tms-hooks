@@ -23,3 +23,11 @@ export type BlogPost = {
     title: string
     body: string
 }
+
+export type PostComment = {
+    postId: number
+    id: number
+    name: string
+    body: string
+    email: string
+}
